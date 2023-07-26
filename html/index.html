@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patch 13.14b Augment Data</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="table-container">
+    <div id="search-container">
+      <input type="text" id="search-input" placeholder="Search...">
+      <label for="silver">Silver</label>
+      <input type="checkbox" id="silver" onclick="filterTable()">
+      <label for="gold">Gold</label>
+      <input type="checkbox" id="gold" onclick="filterTable()">
+      <label for="prismatic">Prismatic</label>
+      <input type="checkbox" id="prismatic" onclick="filterTable()">
+    </div>
+    <table id="data-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Augment</th>
+          <th onclick="sortTable(1)">Games</th>
+          <th onclick="sortTable(2)">AVG</th>
+          <th onclick="sortTable(3)">2-1</th>
+          <th onclick="sortTable(4)">3-2</th>
+          <th onclick="sortTable(5)">4-2</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <!-- Table rows will be added here dynamically -->
+      </tbody>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

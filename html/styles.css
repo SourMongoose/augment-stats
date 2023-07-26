@@ -1,0 +1,100 @@
+body {
+  font-family: "Poppins", Arial, sans-serif; /* Use Poppins as the primary font */
+  text-align: center;
+  margin: 20px;
+  background-color: #222;
+  color: #fff;
+}
+
+h1 {
+  font-family: "Poppins", Arial, sans-serif; /* Use Poppins for the heading as well */
+  margin-bottom: 20px;
+}
+
+#table-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#search-container {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+#search-input {
+  font-family: "Poppins", Arial, sans-serif;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+  background-color: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+#search-input:focus {
+  width: 100%;
+  max-width: 300px;
+}
+
+#search-container label {
+  margin-left: 30px;
+}
+
+#data-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+th, td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #444;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 41%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 15%;
+}
+
+th:nth-child(3),
+td:nth-child(3),
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5),
+th:nth-child(6),
+td:nth-child(6) {
+  width: 11%;
+}
+
+th {
+  cursor: pointer;
+  background-color: #333;
+}
+
+th:hover {
+  background-color: #444;
+}
+
+tr:nth-child(odd) {
+  background-color: #222;
+}
+
+tr:nth-child(even) {
+  background-color: #282828;
+}
+
+tr:hover {
+  background-color: #444;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
