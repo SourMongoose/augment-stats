@@ -96,54 +96,83 @@ function sortTable(columnIndex) {
     filterTable();
 }
 
+// Function to generate the popup table header dynamically
+function generatePopupTableHeader() {
+  const thead = document.querySelectorAll('#popup-table thead')[0];
+  thead.innerHTML = '';
+  const headerRow = thead.insertRow();
+  const tableHeaders = ['Unit', 'Games', 'AVG', 'Delta']; // Add more header labels as needed
+
+  tableHeaders.forEach(label => {
+    const headerCell = document.createElement('th');
+    headerCell.textContent = label;
+    headerRow.appendChild(headerCell);
+  });
+}
+
+// Function to generate the popup table rows dynamically
+function generatePopupTableRows(data) {
+  const tableBody = document.getElementById('popup-table-body');
+  tableBody.innerHTML = '';
+
+  data.forEach(item => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${item.unit}</td>
+      <td>${item.games}</td>
+      <td>${item.avg.toFixed(2)}</td>
+      <td>${item.delta.toFixed(2)}</td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+// Function to sort the popup table data based on the clicked column
+function sortPopupTable(data, columnIndex, ascending) {
+  data.sort((a, b) => {
+    const keyA = Object.values(a)[columnIndex];
+    const keyB = Object.values(b)[columnIndex];
+
+    if (typeof keyA === 'string') {
+      // Sort strings alphabetically
+      return ascending ? keyA.localeCompare(keyB) : keyB.localeCompare(keyA);
+    } else {
+      // Sort numbers
+      return ascending ? keyA - keyB : keyB - keyA;
+    }
+  });
+
+  // Generate the sorted popup table rows and update the table
+  generatePopupTableRows(data);
+}
+
 // Function to show the popup with additional details and the second table
 function showPopup(row) {
     const popupContainer = document.getElementById('popup-container');
     const popupContent = document.getElementById('popup-content');
-
-    // Get the data from the row and populate the main table content
-    const rowData = row.cells;
-    const popupContentHTML = `
-        <h2>${rowData[0].innerText}</h2>
-        <table id="popup-table"></table>
-    `;
-
-    popupContent.innerHTML = popupContentHTML;
     const popupTable = document.getElementById('popup-table');
 
-    // Generate the second table (popup table)
-    let popupTableHTML = `
-    <thead>
-      <tr>
-        <th>Unit</th>
-        <th>Games</th>
-        <th>AVG</th>
-        <th>Delta</th>
-      </tr>
-    </thead>
-    <tbody>
-    `;
+    // Generate the popup table header and rows
+    document.querySelectorAll('#popup-content h2')[0].innerHTML = row.cells[0].innerText;
+    generatePopupTableHeader();
+    let data = window.augment_unit_data[row.cells[0].innerText];
+    sortPopupTable(data, 1, !isAscending);
+    generatePopupTableRows(data);
 
-    window.augment_unit_data[rowData[0].innerText].sort((a, b) => {
-        return -(a['games'] - b['games']);
+    // Add event listeners to the popup table headers for sorting
+    const popupTableHeaders = document.querySelectorAll('#popup-table th');
+    popupTableHeaders.forEach((header, index) => {
+        header.addEventListener('click', () => {
+            const isAscending = header.classList.contains('ascending');
+            sortPopupTable(data, index, !isAscending);
+
+            // Toggle the ascending/descending class for the header
+            popupTableHeaders.forEach(h => h.classList.remove('ascending', 'descending'));
+            header.classList.toggle(isAscending ? 'descending' : 'ascending');
+        });
     });
 
-    window.augment_unit_data[rowData[0].innerText].forEach(item => {
-        popupTableHTML += `
-        <tr>
-          <td>${item.unit}</td>
-          <td>${item.games}</td>
-          <td>${item.avg.toFixed(2)}</td>
-          <td>${item.delta.toFixed(2)}</td>
-        </tr>`
-    });
-
-    popupTableHTML += `</tbody>
-    `;
-
-    popupTable.innerHTML = popupTableHTML;
     popupContainer.style.display = 'block';
-
     popupContent.scrollTop = 0;
 }
 
