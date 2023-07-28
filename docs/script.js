@@ -143,6 +143,8 @@ function showPopup(row) {
 
     popupTable.innerHTML = popupTableHTML;
     popupContainer.style.display = 'block';
+
+    popupContent.scrollTop = 0;
 }
 
 // Function to close the popup
